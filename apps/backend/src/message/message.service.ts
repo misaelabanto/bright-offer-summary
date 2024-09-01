@@ -60,22 +60,23 @@ export class MessageService {
 		if (!originalMessage) {
 			throw new Error('Message not found');
 		}
-		const offer = await this.offerService.updateOffer(
-			(originalMessage.offer as Offer).id,
-			dto.offer
-		);
+		if (dto.offer) {
+			await this.offerService.updateOffer(
+				(originalMessage.offer as Offer).id,
+				dto.offer
+			);
+		}
 		const [message] = await this.db
 			.update(messages)
 			.set({
-				offer: offer.id,
-				phoneNumber: dto.phoneNumber,
+				phoneNumber: dto.phoneNumber || originalMessage.phoneNumber,
 				sendAt: dto.sendAt?.toISOString() || originalMessage.sendAt,
 			})
 			.where(eq(messages.id, id))
 			.returning();
 		return {
 			...message,
-			offer,
+			offer: { ...(originalMessage.offer as Offer), ...(dto.offer || {}) },
 			sendAt: new Date(message.sendAt),
 			createdAt: new Date(message.createdAt),
 		};

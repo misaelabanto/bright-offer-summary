@@ -1,12 +1,12 @@
 import { ConfigType, getConfigToken } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
-import { eq } from 'drizzle-orm';
 import { dbMock } from '~/common/config/database-mock.config';
 import databaseConfig from '~/common/config/database.config';
-import { messages } from '~/drizzle-schema';
+import { messages, offers } from '~/drizzle-schema';
 import { MessageService } from '~/message/message.service';
 import { MESSAGE_MOCK } from '~/message/mock/message.mock';
+import { OFFER_MOCK } from '~/offer/mock/offer.mock';
 import { OfferServiceMock } from '~/offer/mock/offer.service.mock';
 import { OfferService } from '~/offer/offer.service';
 
@@ -39,7 +39,39 @@ describe('MessageService', () => {
 		expect(service).toBeDefined();
 	});
 
+	it('should get all messages', async () => {
+		const [offer] = await db
+			.insert(offers)
+			.values([
+				{
+					...OFFER_MOCK,
+				},
+			])
+			.returning();
+		await db.insert(messages).values([
+			{
+				...MESSAGE_MOCK,
+				sendAt: MESSAGE_MOCK.sendAt.toISOString(),
+				offer: offer.id,
+			},
+		]);
+		const foundMessages = await service.getMessages();
+		expect(foundMessages).toHaveLength(1);
+	});
+
 	it('should create a new message', async () => {
+		const [foundOffer] = await db
+			.insert(offers)
+			.values([
+				{
+					...OFFER_MOCK,
+				},
+			])
+			.returning();
+		vi.spyOn(offerService, 'createOffer').mockResolvedValue({
+			...OFFER_MOCK,
+			id: foundOffer.id,
+		});
 		const message = await service.createMessage(MESSAGE_MOCK);
 		expect(offerService.createOffer).toBeCalledWith(MESSAGE_MOCK.offer);
 		expect(message.id).toBeDefined();
@@ -56,23 +88,49 @@ describe('MessageService', () => {
 		});
 
 		it('should update a message', async () => {
-			const messageId = randomUUID();
-			vi.spyOn(db.query.messages, 'findFirst').mockResolvedValue({
-				id: messageId,
-				...MESSAGE_MOCK,
-				createdAt: new Date().toISOString(),
-				offer: 'offerId',
-				sendAt: new Date().toISOString(),
+			const [foundOffer] = await db
+				.insert(offers)
+				.values([
+					{
+						...OFFER_MOCK,
+					},
+				])
+				.returning();
+			vi.spyOn(offerService, 'createOffer').mockResolvedValue({
+				...OFFER_MOCK,
+				id: foundOffer.id,
 			});
-			await service.updateMessage(messageId, MESSAGE_MOCK);
-			expect(db.query.messages.findFirst).toBeCalledWith({
-				where: eq(messages.id, messageId),
-				with: { offer: true },
+			const message = await service.createMessage(MESSAGE_MOCK);
+			const updatedMessage = await service.updateMessage(message.id, {
+				sendAt: new Date('2025-01-01'),
 			});
-			expect(db.update(messages).set).toBeCalledWith({
-				offer: MESSAGE_MOCK.offer,
-				phoneNumber: MESSAGE_MOCK.phoneNumber,
-				sendAt: MESSAGE_MOCK.sendAt.toISOString(),
+			expect(updatedMessage.sendAt).toEqual(new Date('2025-01-01'));
+			expect(updatedMessage.offer).toBeDefined();
+		});
+
+		it('should update offer if it is present in dto', async () => {
+			const [foundOffer] = await db
+				.insert(offers)
+				.values([
+					{
+						...OFFER_MOCK,
+					},
+				])
+				.returning();
+			vi.spyOn(offerService, 'createOffer').mockResolvedValue({
+				...OFFER_MOCK,
+				id: foundOffer.id,
+			});
+			const message = await service.createMessage(MESSAGE_MOCK);
+			await service.updateMessage(message.id, {
+				offer: {
+					...OFFER_MOCK,
+					systemSize: 7.7,
+				},
+			});
+			expect(offerService.updateOffer).toBeCalledWith(foundOffer.id, {
+				...OFFER_MOCK,
+				systemSize: 7.7,
 			});
 		});
 	});
