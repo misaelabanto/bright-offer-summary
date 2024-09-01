@@ -13,5 +13,5 @@ export class UpdateMessageDto
 	@ValidateNested()
 	@Type(() => CreateOfferDto)
 	@ApiProperty({ type: CreateOfferDto })
-	offer: UpdateOfferDto;
+	offer?: UpdateOfferDto;
 }

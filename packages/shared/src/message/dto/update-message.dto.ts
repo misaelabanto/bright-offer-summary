@@ -3,5 +3,5 @@ import { ICreateMessageDto } from './create-message.dto';
 
 export interface IUpdateMessageDto
 	extends Partial<Omit<ICreateMessageDto, 'offer'>> {
-	offer: IUpdateOfferDto;
+	offer?: IUpdateOfferDto;
 }
