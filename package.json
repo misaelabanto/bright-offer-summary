@@ -1,5 +1,5 @@
 {
-  "name": "bright-solar-offers",
+  "name": "bright-offer-summary",
   "private": true,
   "scripts": {
     "build": "turbo build",
