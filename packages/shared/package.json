@@ -1,0 +1,16 @@
+{
+  "name": "@bright-offer-summary/shared",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "author": "misaelabanto",
+  "dependencies": {
+    "@bright-offer-summary/typescript-config": "workspace:*"
+  }
+}
