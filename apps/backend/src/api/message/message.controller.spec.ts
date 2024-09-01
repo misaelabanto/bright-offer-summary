@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MessageController } from '~/api/message/message.controller';
 import { MessageService } from '~/message/message.service';
 import { MESSAGE_MOCK } from '~/message/mock/message.mock';
+import { MessageServiceMock } from '~/message/mock/message.service.mock';
 
 describe('MessageController', () => {
 	let controller: MessageController;
@@ -13,10 +14,7 @@ describe('MessageController', () => {
 				MessageController,
 				{
 					provide: MessageService,
-					useValue: {
-						createMessage: vi.fn(),
-						updateMessage: vi.fn(),
-					},
+					useClass: MessageServiceMock,
 				},
 			],
 		}).compile();
@@ -33,5 +31,12 @@ describe('MessageController', () => {
 		const dto = { ...MESSAGE_MOCK };
 		await controller.createMessage(dto);
 		expect(messageService.createMessage).toBeCalledWith(dto);
+	});
+
+	it('should update a message', async () => {
+		const dto = { ...MESSAGE_MOCK };
+		const id = '1';
+		await controller.updateMessage(id, dto);
+		expect(messageService.updateMessage).toBeCalledWith(id, dto);
 	});
 });
