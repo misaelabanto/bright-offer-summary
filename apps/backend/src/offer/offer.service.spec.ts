@@ -1,6 +1,6 @@
 import { getConfigToken } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { randomUUID } from 'crypto';
+import { dbMock } from '~/common/config/database-mock.config';
 import { OFFER_MOCK } from '~/offer/mock/offer.mock';
 
 import { OfferService } from '~/offer/offer.service';
@@ -14,18 +14,7 @@ describe('OfferService', () => {
 				OfferService,
 				{
 					provide: getConfigToken('database'),
-					useValue: {
-						insert: vi.fn().mockReturnValue({
-							values: vi.fn().mockReturnValue({
-								returning: vi.fn().mockResolvedValue([
-									{
-										id: randomUUID(),
-										...OFFER_MOCK,
-									},
-								]),
-							}),
-						}),
-					},
+					useValue: dbMock,
 				},
 			],
 		}).compile();
@@ -41,5 +30,15 @@ describe('OfferService', () => {
 		const offer = await service.createOffer(OFFER_MOCK);
 
 		expect(offer.id).toBeDefined();
+	});
+
+	it('should update an offer', async () => {
+		const offer = await service.createOffer(OFFER_MOCK);
+		const updatedOffer = await service.updateOffer(offer.id, {
+			...OFFER_MOCK,
+			systemSize: 10,
+		});
+
+		expect(updatedOffer.systemSize).toBe(10);
 	});
 });
