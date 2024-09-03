@@ -1,20 +1,21 @@
-"use client";
+import { FC, PropsWithChildren } from 'react';
 
-import { ReactNode } from "react";
-
-interface ButtonProps {
-  children: ReactNode;
-  className?: string;
-  appName: string;
+export interface ButtonProps {
+	onClick?: () => void;
+	isLoading?: boolean;
+	type: 'button' | 'submit' | 'reset';
 }
 
-export const Button = ({ children, className, appName }: ButtonProps) => {
-  return (
-    <button
-      className={className}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
-    >
-      {children}
-    </button>
-  );
+export const Button: FC<PropsWithChildren<ButtonProps>> = ({
+	children,
+	onClick,
+	isLoading = false,
+	type,
+}) => {
+	return (
+		<button type={type} onClick={onClick} className="btn btn-primary m-2">
+			{!isLoading && children}
+			{isLoading && <div className="loading loading-spinner text-primary" />}
+		</button>
+	);
 };
