@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { eq } from 'drizzle-orm';
 import databaseConfig from '~/common/config/database.config';
@@ -17,7 +17,7 @@ export class MessageService {
 		private readonly offerService: OfferService
 	) {}
 
-	async getMessages(): Promise<Message[]> {
+	async findAll(): Promise<Message[]> {
 		const messages = await this.db.query.messages.findMany({
 			with: {
 				offer: true,
@@ -31,7 +31,25 @@ export class MessageService {
 		}));
 	}
 
-	async createMessage(dto: CreateMessageDto): Promise<Message> {
+	async findById(id: string): Promise<Message> {
+		const message = await this.db.query.messages.findFirst({
+			where: eq(messages.id, id),
+			with: {
+				offer: true,
+			},
+		});
+		if (!message) {
+			throw new NotFoundException('Message not found');
+		}
+		return {
+			...message,
+			offer: message.offer as Offer,
+			sendAt: new Date(message.sendAt),
+			createdAt: new Date(message.createdAt),
+		};
+	}
+
+	async create(dto: CreateMessageDto): Promise<Message> {
 		const offer = await this.offerService.createOffer(dto.offer);
 		const [messageCreated] = await this.db
 			.insert(messages)
@@ -50,7 +68,7 @@ export class MessageService {
 		};
 	}
 
-	async updateMessage(id: string, dto: UpdateMessageDto): Promise<Message> {
+	async update(id: string, dto: UpdateMessageDto): Promise<Message> {
 		const originalMessage = await this.db.query.messages.findFirst({
 			where: eq(messages.id, id),
 			with: {
@@ -58,7 +76,7 @@ export class MessageService {
 			},
 		});
 		if (!originalMessage) {
-			throw new Error('Message not found');
+			throw new NotFoundException('Message not found');
 		}
 		if (dto.offer) {
 			await this.offerService.updateOffer(

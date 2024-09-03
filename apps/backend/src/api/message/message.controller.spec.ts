@@ -30,13 +30,13 @@ describe('MessageController', () => {
 	it('should create a message', async () => {
 		const dto = { ...MESSAGE_MOCK };
 		await controller.createMessage(dto);
-		expect(messageService.createMessage).toBeCalledWith(dto);
+		expect(messageService.create).toBeCalledWith(dto);
 	});
 
 	it('should update a message', async () => {
 		const dto = { ...MESSAGE_MOCK };
 		const id = '1';
 		await controller.updateMessage(id, dto);
-		expect(messageService.updateMessage).toBeCalledWith(id, dto);
+		expect(messageService.update).toBeCalledWith(id, dto);
 	});
 });

@@ -3,9 +3,11 @@ import { MessageService } from '~/message/message.service';
 
 @Injectable()
 export class MessageServiceMock implements Readonly<MessageService> {
-	getMessages: MessageService['getMessages'] = vi.fn();
+	findById: MessageService['findById'] = vi.fn();
 
-	createMessage: MessageService['createMessage'] = vi.fn();
+	findAll: MessageService['findAll'] = vi.fn();
 
-	updateMessage: MessageService['updateMessage'] = vi.fn();
+	create: MessageService['create'] = vi.fn();
+
+	update: MessageService['update'] = vi.fn();
 }

@@ -15,7 +15,7 @@ export class MessageController {
 		@Body()
 		dto: CreateMessageDto
 	): Promise<Message> {
-		return this.messageService.createMessage(dto);
+		return this.messageService.create(dto);
 	}
 
 	@Patch(':id')
@@ -24,6 +24,6 @@ export class MessageController {
 		@Param('id') id: string,
 		@Body() dto: CreateMessageDto
 	): Promise<Message> {
-		return this.messageService.updateMessage(id, dto);
+		return this.messageService.update(id, dto);
 	}
 }

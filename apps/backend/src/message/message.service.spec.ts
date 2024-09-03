@@ -39,7 +39,7 @@ describe('MessageService', () => {
 		expect(service).toBeDefined();
 	});
 
-	it('should get all messages', async () => {
+	it('should find all messages', async () => {
 		const [offer] = await db
 			.insert(offers)
 			.values([
@@ -55,7 +55,7 @@ describe('MessageService', () => {
 				offer: offer.id,
 			},
 		]);
-		const foundMessages = await service.getMessages();
+		const foundMessages = await service.findAll();
 		expect(foundMessages).toHaveLength(1);
 	});
 
@@ -72,7 +72,7 @@ describe('MessageService', () => {
 			...OFFER_MOCK,
 			id: foundOffer.id,
 		});
-		const message = await service.createMessage(MESSAGE_MOCK);
+		const message = await service.create(MESSAGE_MOCK);
 		expect(offerService.createOffer).toBeCalledWith(MESSAGE_MOCK.offer);
 		expect(message.id).toBeDefined();
 		expect(message.phoneNumber).toBe('1234567890');
@@ -82,9 +82,9 @@ describe('MessageService', () => {
 
 	describe('updateMessage', () => {
 		it('should throw error if message not found', async () => {
-			await expect(
-				service.updateMessage(randomUUID(), MESSAGE_MOCK)
-			).rejects.toThrow('Message not found');
+			await expect(service.update(randomUUID(), MESSAGE_MOCK)).rejects.toThrow(
+				'Message not found'
+			);
 		});
 
 		it('should update a message', async () => {
@@ -100,8 +100,8 @@ describe('MessageService', () => {
 				...OFFER_MOCK,
 				id: foundOffer.id,
 			});
-			const message = await service.createMessage(MESSAGE_MOCK);
-			const updatedMessage = await service.updateMessage(message.id, {
+			const message = await service.create(MESSAGE_MOCK);
+			const updatedMessage = await service.update(message.id, {
 				sendAt: new Date('2025-01-01'),
 			});
 			expect(updatedMessage.sendAt).toEqual(new Date('2025-01-01'));
@@ -121,8 +121,8 @@ describe('MessageService', () => {
 				...OFFER_MOCK,
 				id: foundOffer.id,
 			});
-			const message = await service.createMessage(MESSAGE_MOCK);
-			await service.updateMessage(message.id, {
+			const message = await service.create(MESSAGE_MOCK);
+			await service.update(message.id, {
 				offer: {
 					...OFFER_MOCK,
 					systemSize: 7.7,
@@ -133,5 +133,28 @@ describe('MessageService', () => {
 				systemSize: 7.7,
 			});
 		});
+	});
+
+	it('should find message by id', async () => {
+		const [offer] = await db
+			.insert(offers)
+			.values([
+				{
+					...OFFER_MOCK,
+				},
+			])
+			.returning();
+		const [insertedMessage] = await db
+			.insert(messages)
+			.values([
+				{
+					...MESSAGE_MOCK,
+					sendAt: MESSAGE_MOCK.sendAt.toISOString(),
+					offer: offer.id,
+				},
+			])
+			.returning();
+		const foundMessage = await service.findById(insertedMessage.id);
+		expect(foundMessage.sendAt).toStrictEqual(MESSAGE_MOCK.sendAt);
 	});
 });
