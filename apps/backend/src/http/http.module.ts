@@ -8,6 +8,7 @@ import { FetchService } from '~/http/providers/fetch.provider';
 			useValue: FetchService,
 		},
 	],
+	exports: ['FetchService'],
 })
 @Global()
 export class HttpModule {}
