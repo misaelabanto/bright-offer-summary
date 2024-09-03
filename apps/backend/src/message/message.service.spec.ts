@@ -135,26 +135,34 @@ describe('MessageService', () => {
 		});
 	});
 
-	it('should find message by id', async () => {
-		const [offer] = await db
-			.insert(offers)
-			.values([
-				{
-					...OFFER_MOCK,
-				},
-			])
-			.returning();
-		const [insertedMessage] = await db
-			.insert(messages)
-			.values([
-				{
-					...MESSAGE_MOCK,
-					sendAt: MESSAGE_MOCK.sendAt.toISOString(),
-					offer: offer.id,
-				},
-			])
-			.returning();
-		const foundMessage = await service.findById(insertedMessage.id);
-		expect(foundMessage.sendAt).toStrictEqual(MESSAGE_MOCK.sendAt);
+	describe('findById', () => {
+		it('should throw error if message not found', async () => {
+			await expect(service.findById(randomUUID())).rejects.toThrow(
+				'Message not found'
+			);
+		});
+
+		it('should find message by id', async () => {
+			const [offer] = await db
+				.insert(offers)
+				.values([
+					{
+						...OFFER_MOCK,
+					},
+				])
+				.returning();
+			const [insertedMessage] = await db
+				.insert(messages)
+				.values([
+					{
+						...MESSAGE_MOCK,
+						sendAt: MESSAGE_MOCK.sendAt.toISOString(),
+						offer: offer.id,
+					},
+				])
+				.returning();
+			const foundMessage = await service.findById(insertedMessage.id);
+			expect(foundMessage.sendAt).toStrictEqual(MESSAGE_MOCK.sendAt);
+		});
 	});
 });

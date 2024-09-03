@@ -29,14 +29,25 @@ describe('MessageController', () => {
 
 	it('should create a message', async () => {
 		const dto = { ...MESSAGE_MOCK };
-		await controller.createMessage(dto);
+		await controller.create(dto);
 		expect(messageService.create).toBeCalledWith(dto);
 	});
 
 	it('should update a message', async () => {
 		const dto = { ...MESSAGE_MOCK };
 		const id = '1';
-		await controller.updateMessage(id, dto);
+		await controller.update(id, dto);
 		expect(messageService.update).toBeCalledWith(id, dto);
+	});
+
+	it('should find all messages', async () => {
+		await controller.findAll();
+		expect(messageService.findAll).toBeCalled();
+	});
+
+	it('should find a message by id', async () => {
+		const id = '1';
+		await controller.findById(id);
+		expect(messageService.findById).toBeCalledWith(id);
 	});
 });
