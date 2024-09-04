@@ -1,6 +1,7 @@
 # Bright Solar Offer Sumary Frontend
 
 This is the frontend app for Bright Solar Summary scheduling.
+It uses ReactJS with vite for scheduling and viewing scheduled messages.
 
 ## Table of Contents
 - [Bright Solar Offer Sumary Frontend](#bright-solar-offer-sumary-frontend)
@@ -18,7 +19,6 @@ This is the frontend app for Bright Solar Summary scheduling.
     - [`pnpm lint`](#pnpm-lint)
   - [Testing](#testing)
     - [Running Tests](#running-tests)
-  - [Contributing](#contributing)
 
 ## Getting Started
 
@@ -108,7 +108,3 @@ pnpm test
 ```
 
 This will run all unit tests located in the `src/message/tests/` directory.
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue for discussion.
