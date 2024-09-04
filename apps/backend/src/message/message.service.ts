@@ -1,21 +1,41 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { MessageStatus } from '@bright-offer-summary/shared';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { eq } from 'drizzle-orm';
 import databaseConfig from '~/common/config/database.config';
+import frontendConfig from '~/common/config/frontend.config';
 import { messages } from '~/drizzle-schema';
 import { CreateMessageDto } from '~/message/dto/create-message.dto';
 import { UpdateMessageDto } from '~/message/dto/update-message.dto';
+import { MESSAGE_TEXT, SEND_MESSAGE_EVENT } from '~/message/message.constant';
 import { Message } from '~/message/message.schema';
+import { FakeMessagingProvider } from '~/messaging/providers/fake.provider';
 import { Offer } from '~/offer/offer.schema';
 import { OfferService } from '~/offer/offer.service';
+import { CronSchedulingProvider } from '~/scheduling/providers/cron-scheduling.provider';
 
 @Injectable()
 export class MessageService {
+	private readonly logger = new Logger(MessageService.name);
+
+	// eslint-disable-next-line max-params
 	constructor(
 		@Inject(databaseConfig.KEY)
 		private readonly db: ConfigType<typeof databaseConfig>,
-		private readonly offerService: OfferService
-	) {}
+		@Inject(frontendConfig.KEY)
+		private readonly frontend: ConfigType<typeof frontendConfig>,
+		private readonly offerService: OfferService,
+		private readonly cron: CronSchedulingProvider,
+		private readonly fakeMessagingProvider: FakeMessagingProvider
+	) {
+		this.cron.register(
+			SEND_MESSAGE_EVENT,
+			async ({ messageId }: { messageId: string }) => {
+				await this.sendMessageToPhoneNumber(messageId);
+			}
+		);
+		this.setupPendingMessages();
+	}
 
 	async findAll(): Promise<Message[]> {
 		const messages = await this.db.query.messages.findMany({
@@ -28,6 +48,7 @@ export class MessageService {
 			offer: message.offer as Offer,
 			sendAt: new Date(message.sendAt),
 			createdAt: new Date(message.createdAt),
+			status: message.status as MessageStatus,
 		}));
 	}
 
@@ -43,6 +64,7 @@ export class MessageService {
 		}
 		return {
 			...message,
+			status: message.status as MessageStatus,
 			offer: message.offer as Offer,
 			sendAt: new Date(message.sendAt),
 			createdAt: new Date(message.createdAt),
@@ -58,11 +80,13 @@ export class MessageService {
 					phoneNumber: dto.phoneNumber,
 					sendAt: dto.sendAt.toISOString(),
 					offer: offer.id,
+					status: 'pending',
 				},
 			])
 			.returning();
 		return {
 			...messageCreated,
+			status: messageCreated.status as MessageStatus,
 			sendAt: new Date(messageCreated.sendAt),
 			createdAt: new Date(messageCreated.createdAt),
 		};
@@ -94,9 +118,52 @@ export class MessageService {
 			.returning();
 		return {
 			...message,
+			status: message.status as MessageStatus,
 			offer: { ...(originalMessage.offer as Offer), ...(dto.offer || {}) },
 			sendAt: new Date(message.sendAt),
 			createdAt: new Date(message.createdAt),
 		};
+	}
+
+	/**
+	 * This function schedules pending messages in case of restart
+	 * the container or application
+	 **/
+	async setupPendingMessages(): Promise<void> {
+		const pendingMessages = await this.db.query.messages.findMany({
+			where: eq(messages.status, 'pending'),
+		});
+		for (const message of pendingMessages) {
+			this.cron.schedule(SEND_MESSAGE_EVENT, new Date(message.sendAt), [
+				{
+					messageId: message.id,
+				},
+			]);
+		}
+	}
+
+	async sendMessageToPhoneNumber(messageId: string): Promise<void> {
+		const message = await this.findById(messageId);
+		const link = `${this.frontend.url}/messages/${message.id}`;
+		const text = MESSAGE_TEXT(link);
+		try {
+			await this.fakeMessagingProvider.sendMessage(message.phoneNumber, text);
+			await this.db
+				.update(messages)
+				.set({
+					status: 'sent',
+				})
+				.where(eq(messages.id, messageId))
+				.execute();
+		} catch (error) {
+			this.logger.error(error);
+			await this.db
+				.update(messages)
+				.set({
+					status: 'failed',
+				})
+				.where(eq(messages.id, messageId))
+				.execute();
+		}
 	}
 }
