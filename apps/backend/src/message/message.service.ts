@@ -31,10 +31,10 @@ export class MessageService {
 		this.cron.register(
 			SEND_MESSAGE_EVENT,
 			async ({ messageId }: { messageId: string }) => {
-				await this.sendMessageToPhoneNumber(messageId);
+				await this.send(messageId);
 			}
 		);
-		this.setupPendingMessages();
+		this.setupPending();
 	}
 
 	async findAll(): Promise<Message[]> {
@@ -84,6 +84,9 @@ export class MessageService {
 				},
 			])
 			.returning();
+		this.cron.schedule(SEND_MESSAGE_EVENT, dto.sendAt, {
+			messageId: messageCreated.id,
+		});
 		return {
 			...messageCreated,
 			status: messageCreated.status as MessageStatus,
@@ -129,20 +132,18 @@ export class MessageService {
 	 * This function schedules pending messages in case of restart
 	 * the container or application
 	 **/
-	async setupPendingMessages(): Promise<void> {
+	private async setupPending(): Promise<void> {
 		const pendingMessages = await this.db.query.messages.findMany({
 			where: eq(messages.status, 'pending'),
 		});
 		for (const message of pendingMessages) {
-			this.cron.schedule(SEND_MESSAGE_EVENT, new Date(message.sendAt), [
-				{
-					messageId: message.id,
-				},
-			]);
+			this.cron.schedule(SEND_MESSAGE_EVENT, new Date(message.sendAt), {
+				messageId: message.id,
+			});
 		}
 	}
 
-	async sendMessageToPhoneNumber(messageId: string): Promise<void> {
+	private async send(messageId: string): Promise<void> {
 		const message = await this.findById(messageId);
 		const link = `${this.frontend.url}/messages/${message.id}`;
 		const text = MESSAGE_TEXT(link);
