@@ -1,18 +1,18 @@
 import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FakeProvider } from './fake.provider';
+import { FakeMessagingProvider } from './fake.provider';
 
 describe('FakeProvider', () => {
-	let provider: FakeProvider;
+	let provider: FakeMessagingProvider;
 	let logger: Logger;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			providers: [FakeProvider],
+			providers: [FakeMessagingProvider],
 		}).compile();
 
-		provider = module.get<FakeProvider>(FakeProvider);
-		logger = new Logger(FakeProvider.name);
+		provider = module.get<FakeMessagingProvider>(FakeMessagingProvider);
+		logger = new Logger(FakeMessagingProvider.name);
 		vi.spyOn(logger, 'log').mockImplementation(() => {});
 		provider.logger = logger;
 	});
