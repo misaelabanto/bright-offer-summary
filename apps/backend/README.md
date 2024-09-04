@@ -37,7 +37,6 @@ Create a `.env` file in the root of your project with the following variables:
 
 ```bash
 PORT=3000
-DATABASE_URL=sqlite.db
 FRONTEND_URL=<your-frontend-url>
 WHATSAPP_MESSAGING_API_URL=<your-whatsapp-api-url>
 ```
