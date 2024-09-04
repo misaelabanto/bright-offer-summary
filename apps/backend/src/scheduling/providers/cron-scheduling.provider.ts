@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
+import isEqual from 'lodash.isequal';
 import { SchedulingProvider } from '~/scheduling/scheduling.provider';
 
 // eslint-disable-next-line no-magic-numbers
@@ -25,8 +26,15 @@ export class CronSchedulingProvider implements SchedulingProvider {
 		this.events.set(event, callback);
 	}
 
-	schedule(event: string, at: Date, data: unknown[]): Promise<void> {
+	schedule(event: string, at: Date, ...data: unknown[]): Promise<void> {
 		this.scheduledEvents.push({ event, at, data });
+		return Promise.resolve();
+	}
+
+	cancel(data: unknown[]): Promise<void> {
+		this.scheduledEvents = this.scheduledEvents.filter(
+			scheduledEvent => !isEqual(scheduledEvent.data, data)
+		);
 		return Promise.resolve();
 	}
 
