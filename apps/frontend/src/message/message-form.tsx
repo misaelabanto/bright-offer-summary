@@ -6,7 +6,7 @@ import {
 	TextInput,
 	TimeInput,
 } from '@bright-offer-summary/ui';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { z, type ZodType } from 'zod';
 
 export interface MessageFormProps {
@@ -31,20 +31,24 @@ export const MessageForm: FC<MessageFormProps> = ({
 	onSubmit,
 	isLoading = false,
 }) => {
+	const formRef = useRef<HTMLFormElement>(null);
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const form = event.currentTarget;
+		const data = Object.fromEntries(
+			new FormData(formRef.current || undefined).entries()
+		);
 		const dto = createMessageDtoSchema.parse({
 			offer: {
-				systemSize: Number(form.systemSize.value),
-				annualEscalator: Number(form.annualEscalator.value),
-				initialDeposit: Number(form.initialDeposit.value),
-				monthlyPayment: Number(form.monthlyPayment.value),
-				panelQuantity: Number(form.panelQuantity.value),
-				panelType: form.panelType.value,
+				systemSize: Number(data.systemSize),
+				annualEscalator: Number(data.annualEscalator),
+				initialDeposit: Number(data.initialDeposit),
+				monthlyPayment: Number(data.monthlyPayment),
+				panelQuantity: Number(data.panelQuantity),
+				panelType: data.panelType,
 			},
-			phoneNumber: form.phoneNumber.value,
-			sendAt: new Date(`${form.sendAtDate.value}T${form.sendAtTime.value}`),
+			phoneNumber: data.phoneNumber,
+			sendAt: new Date(`${data.sendAtDate}T${data.sendAtTime}`),
 		});
 		await onSubmit(dto);
 
@@ -52,7 +56,7 @@ export const MessageForm: FC<MessageFormProps> = ({
 	};
 
 	return (
-		<form className="form-control" onSubmit={handleSubmit}>
+		<form className="form-control" onSubmit={handleSubmit} ref={formRef}>
 			<div className="grid md:grid-cols-3 sm:grid-cols-2">
 				<TextInput name="phoneNumber" label="Phone Number" />
 				<DateInput name="sendAtDate" label="Fecha de envío" />

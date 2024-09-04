@@ -11,9 +11,9 @@ export const MessageSchedulePage: FC = () => {
 	};
 
 	return (
-		<main className="p-10">
+		<div className="p-10">
 			<h1 className="text-4xl">Schedule message</h1>
 			<MessageForm onSubmit={onFormSubmit} isLoading={isLoading} />
-		</main>
+		</div>
 	);
 };
