@@ -5,6 +5,7 @@ import { HttpModule } from '~/http/http.module';
 import { MessageModule } from '~/message/message.module';
 import { MessagingModule } from '~/messaging/messaging.module';
 import { OfferModule } from '~/offer/offer.module';
+import { SchedulingModule } from '~/scheduling/scheduling.module';
 
 @Module({
 	imports: [
@@ -14,6 +15,7 @@ import { OfferModule } from '~/offer/offer.module';
 		MessagingModule,
 		MessageApiModule,
 		StatusApiModule,
+		SchedulingModule,
 	],
 })
 export class AppModule {}
