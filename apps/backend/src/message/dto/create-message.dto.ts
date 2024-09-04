@@ -6,7 +6,7 @@ import { Message } from '~/message/message.schema';
 import { CreateOfferDto } from '~/offer/dto/create-offer.dto';
 
 export class CreateMessageDto
-	extends OmitType(Message, ['id', 'createdAt', 'offer'])
+	extends OmitType(Message, ['id', 'createdAt', 'offer', 'status'])
 	implements ICreateMessageDto
 {
 	@ApiProperty({ type: CreateOfferDto })
