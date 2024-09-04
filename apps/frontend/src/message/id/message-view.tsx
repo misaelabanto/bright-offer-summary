@@ -8,46 +8,41 @@ export interface MessageViewProps {
 export const MessageView: FC<MessageViewProps> = ({ message }) => {
 	const offer = message.offer as IOffer;
 	return (
-		<main>
-			<summary>
+		<div className="w-2/3">
+			<h3 className="text-center font-bold">
 				¡Felicidades! Estás un paso más cerca de disfrutar de los beneficios del
 				Sol.
-			</summary>
-			<hr />
+			</h3>
+			<hr className="h-0.5 bg-gray-400 my-4" />
+			<h2 className="text-xl font-weight-bold font-bold">Resumen</h2>
 			<table className="table">
 				<tbody>
-					<tr>
+					<tr className="hover">
 						<th>Tamaño del sistema</th>
 						<td>{offer.systemSize} kW</td>
 					</tr>
-					<tr>
+					<tr className="hover">
 						<th>Cantidad de paneles</th>
 						<td>{offer.panelQuantity}</td>
 					</tr>
-					<tr>
+					<tr className="hover">
 						<th>Tipo de panel</th>
 						<td>{offer.panelType}</td>
 					</tr>
-					<tr>
+					<tr className="hover">
 						<th>Mensualidad</th>
 						<td>${offer.monthlyPayment.toFixed(2)}</td>
 					</tr>
-					<tr>
+					<tr className="hover">
 						<th>Depósito inicial</th>
 						<td>${offer.initialDeposit.toFixed(2)}</td>
 					</tr>
-					<tr>
+					<tr className="hover">
 						<th>Escalador</th>
 						<td>{offer.annualEscalator.toFixed(2)}% anual</td>
 					</tr>
 				</tbody>
 			</table>
-			<div>System Size: {offer.systemSize}</div>
-			<div>Annual Escalator: {offer.annualEscalator}</div>
-			<div>Initial Deposit: {offer.initialDeposit}</div>
-			<div>Monthly Payment: {offer.monthlyPayment}</div>
-			<div>Panel Quantity: {offer.panelQuantity}</div>
-			<div>Panel Type: {offer.panelType}</div>
-		</main>
+		</div>
 	);
 };
