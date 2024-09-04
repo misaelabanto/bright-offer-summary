@@ -28,4 +28,7 @@ export class Message implements IMessage {
 		description: 'The creation date of the message',
 	})
 	createdAt: Date;
+
+	@ApiProperty({ description: 'The status of the message' })
+	status: 'pending' | 'sent' | 'failed';
 }

@@ -28,6 +28,7 @@ export const messages = sqliteTable('messages', {
 	offer: text('offer')
 		.notNull()
 		.references(() => offers.id),
+	status: text('status').notNull(),
 });
 
 export const messageRelations = relations(messages, ({ one }) => ({
