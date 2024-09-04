@@ -111,14 +111,19 @@ export class MessageService {
 				dto.offer
 			);
 		}
+		this.cron.cancel({ messageId: id });
 		const [message] = await this.db
 			.update(messages)
 			.set({
 				phoneNumber: dto.phoneNumber || originalMessage.phoneNumber,
 				sendAt: dto.sendAt?.toISOString() || originalMessage.sendAt,
+				status: 'pending',
 			})
 			.where(eq(messages.id, id))
 			.returning();
+		this.cron.schedule(SEND_MESSAGE_EVENT, new Date(message.sendAt), {
+			messageId: message.id,
+		});
 		return {
 			...message,
 			status: message.status as MessageStatus,
