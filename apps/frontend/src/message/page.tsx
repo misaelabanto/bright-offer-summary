@@ -1,19 +1,15 @@
-import { useCreateMessage } from '@/message/hooks/use-create-message';
-import { MessageForm } from '@/message/message-form';
-import { ICreateMessageDto } from '@bright-offer-summary/shared';
+import { useMessages } from '@/message/hooks/use-messages';
+import { MessagesTable } from '@/message/messages-table';
 import { FC } from 'react';
 
-export const MessagePage: FC = () => {
-	const { trigger: createMessage, isLoading } = useCreateMessage();
-
-	const onFormSubmit = async (data: ICreateMessageDto) => {
-		await createMessage(data);
-	};
+export const MessagesPage: FC = () => {
+	const { messages } = useMessages();
 
 	return (
-		<main className="p-10">
-			<h1 className="text-4xl">Schedule message</h1>
-			<MessageForm onSubmit={onFormSubmit} isLoading={isLoading} />
-		</main>
+		<div className="w-screen lg:w-1/2">
+			<h1 className="text-4xl">Scheduled messages</h1>
+			{!messages && <p>Loading...</p>}
+			{messages && <MessagesTable messages={messages} />}
+		</div>
 	);
 };
