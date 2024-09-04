@@ -1,10 +1,9 @@
-# Bright Solar Offer Sumary Frontend
+# Bright Solar Offer Summary Frontend
 
-This is the frontend app for Bright Solar Summary scheduling.
-It uses ReactJS with vite for scheduling and viewing scheduled messages.
+This is the frontend app for Bright Solar Summary scheduling. It uses ReactJS with Vite for scheduling and viewing scheduled messages.
 
 ## Table of Contents
-- [Bright Solar Offer Sumary Frontend](#bright-solar-offer-sumary-frontend)
+- [Bright Solar Offer Summary Frontend](#bright-solar-offer-summary-frontend)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
