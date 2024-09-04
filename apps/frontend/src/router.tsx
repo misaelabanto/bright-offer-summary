@@ -9,14 +9,31 @@ export const router = createBrowserRouter([
 		errorElement: (
 			<GenericError message="Oops! We searched high and low, but couldn't find what you're looking for." />
 		),
+		children: [],
 	},
 	{
-		path: '/message',
+		path: '/messages',
 		async lazy() {
-			const { MessagePage } = await import('./message/page');
-			return { Component: MessagePage };
+			const { MessageLayout } = await import('./message/layout');
+			return { Component: MessageLayout };
 		},
 		children: [
+			{
+				index: true,
+				async lazy() {
+					const { MessagesPage } = await import('./message/page');
+					return { Component: MessagesPage };
+				},
+			},
+			{
+				path: 'schedule',
+				async lazy() {
+					const { MessageSchedulePage } = await import(
+						'./message/schedule/page'
+					);
+					return { Component: MessageSchedulePage };
+				},
+			},
 			{
 				path: ':id',
 				async lazy() {
@@ -27,7 +44,7 @@ export const router = createBrowserRouter([
 		],
 	},
 	{
-		path: '/about',
+		path: 'about',
 		async lazy() {
 			const { AboutPage } = await import('./about/page');
 			return { Component: AboutPage };
