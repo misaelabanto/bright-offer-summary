@@ -30,7 +30,7 @@ describe('MessagesPage', () => {
 				status: 'pending',
 			},
 			{
-				id: '1',
+				id: '2',
 				createdAt: new Date(),
 				offer: {} as IOffer,
 				phoneNumber: '1234567890',
