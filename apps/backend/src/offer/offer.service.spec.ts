@@ -1,7 +1,7 @@
 import { getConfigToken } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { dbMock } from '~/common/config/database-mock.config';
-import { OFFER_MOCK } from '~/offer/mock/offer.mock';
+import { CREATE_OFFER_DTO_MOCK } from '~/offer/mock/offer.mock';
 
 import { OfferService } from '~/offer/offer.service';
 
@@ -27,15 +27,15 @@ describe('OfferService', () => {
 	});
 
 	it('should create a new offer', async () => {
-		const offer = await service.createOffer(OFFER_MOCK);
+		const offer = await service.createOffer(CREATE_OFFER_DTO_MOCK);
 
 		expect(offer.id).toBeDefined();
 	});
 
 	it('should update an offer', async () => {
-		const offer = await service.createOffer(OFFER_MOCK);
+		const offer = await service.createOffer(CREATE_OFFER_DTO_MOCK);
 		const updatedOffer = await service.updateOffer(offer.id, {
-			...OFFER_MOCK,
+			...CREATE_OFFER_DTO_MOCK,
 			systemSize: 10,
 		});
 
