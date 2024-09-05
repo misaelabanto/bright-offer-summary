@@ -8,7 +8,7 @@ export interface MessageViewProps {
 export const MessageView: FC<MessageViewProps> = ({ message }) => {
 	const offer = message.offer as IOffer;
 	return (
-		<div className="w-2/3">
+		<div className="sm:w-1/2">
 			<h3 className="text-center font-bold">
 				¡Felicidades! Estás un paso más cerca de disfrutar de los beneficios del
 				Sol.

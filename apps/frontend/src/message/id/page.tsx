@@ -1,4 +1,5 @@
 import { GenericError } from '@/common/generic-error';
+import { Layout } from '@/layout';
 import { useMessage } from '@/message/hooks/use-message';
 import { MessageView } from '@/message/id/message-view';
 import { FC } from 'react';
@@ -13,10 +14,12 @@ export const MessageIdPage: FC = () => {
 	const { message, error, isLoading } = useMessage(id!);
 
 	return (
-		<main>
-			{error && <GenericError message={error.message} />}
-			{isLoading && <div>Loading...</div>}
-			{message && <MessageView message={message} />}
-		</main>
+		<Layout>
+			<div className="flex justify-center h-screen items-center">
+				{error && <GenericError message={error.message} />}
+				{isLoading && <div>Loading...</div>}
+				{message && <MessageView message={message} />}
+			</div>
+		</Layout>
 	);
 };
