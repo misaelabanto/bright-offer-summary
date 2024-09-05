@@ -28,7 +28,6 @@ export class CronSchedulingProvider implements SchedulingProvider {
 
 	schedule(event: string, at: Date, ...data: unknown[]): Promise<void> {
 		this.scheduledEvents.push({ event, at, data });
-		this.logger.debug('Scheduled event', { event, at, data });
 		return Promise.resolve();
 	}
 
@@ -40,7 +39,7 @@ export class CronSchedulingProvider implements SchedulingProvider {
 	}
 
 	@Interval(ONE_MINUTE)
-	protected process(): Promise<void> {
+	protected async process(): Promise<void> {
 		const now = new Date();
 		for (const scheduledEvent of this.scheduledEvents) {
 			if (scheduledEvent.at >= now) {
@@ -55,7 +54,7 @@ export class CronSchedulingProvider implements SchedulingProvider {
 			} else {
 				this.logger.warn(`No callback found for event ${scheduledEvent.event}`);
 			}
-			this.cancel(scheduledEvent.data);
+			await this.cancel(...scheduledEvent.data);
 		}
 		return Promise.resolve();
 	}
