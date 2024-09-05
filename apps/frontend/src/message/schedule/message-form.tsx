@@ -63,8 +63,8 @@ export const MessageForm: FC<MessageFormProps> = ({
 		>
 			<div className="grid md:grid-cols-3 sm:grid-cols-2">
 				<TextInput name="phoneNumber" label="Phone Number" />
-				<DateInput name="sendAtDate" label="Fecha de envío" />
-				<TimeInput name="sendAtTime" label="Hora de envío" />
+				<DateInput name="sendAtDate" label="Send date" />
+				<TimeInput name="sendAtTime" label="Send time" />
 			</div>
 			<div className="my-4">Offer details:</div>
 			<div className="grid md:grid-cols-3 sm:grid-cols-2">

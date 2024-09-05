@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 import { FC } from 'react';
 
 export const AboutPage: FC = () => {
@@ -5,15 +6,27 @@ export const AboutPage: FC = () => {
 		<main className="flex justify-center items-center h-screen">
 			<div className="flex flex-col gap-10">
 				<h1 className="text-4xl">About</h1>
-				<p>
-					Created by{' '}
-					<a
-						className="hover:underline hover:decoration-blue-500"
-						href="https://github.com/misaelabanto"
-					>
-						Misael Abanto
-					</a>
-				</p>
+				<p>Created by Misael Abanto</p>
+				<ul>
+					<li>
+						<Icon icon="mdi:gmail" className="text-red-400"></Icon>
+						<a
+							className="hover:underline hover:decoration-blue-500"
+							href="mailto:misaelabanto@gmail.com"
+						>
+							misaelabanto@gmail.com
+						</a>
+					</li>
+					<li>
+						<Icon icon="mdi:github"></Icon>
+						<a
+							className="hover:underline hover:decoration-blue-500"
+							href="https://github.com/misaelabanto"
+						>
+							misaelabanto
+						</a>
+					</li>
+				</ul>
 			</div>
 		</main>
 	);

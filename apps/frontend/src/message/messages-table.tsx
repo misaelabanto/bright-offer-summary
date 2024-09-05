@@ -1,5 +1,7 @@
 import { IMessage } from '@bright-offer-summary/shared';
+import { Icon } from '@iconify/react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 	const statusColors = {
@@ -11,17 +13,16 @@ export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 		<table className="table table-zebra w-full">
 			<thead>
 				<tr>
-					<th className="p-2">ID</th>
 					<th className="p-2">Created at</th>
 					<th className="p-2">Scheduled at</th>
 					<th className="p-2">Phone Number</th>
 					<th className="p-2">Status</th>
+					<th className="p-2">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{messages.map(message => (
 					<tr key={message.id}>
-						<td className="p-2">{message.id}</td>
 						<td className="p-2">
 							{new Date(message.createdAt).toLocaleString()}
 						</td>
@@ -33,6 +34,15 @@ export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 							>
 								{message.status}
 							</span>
+						</td>
+						<td className="cursor-pointer">
+							<Link to={'/messages/' + message.id}>
+								<Icon
+									icon="mdi:eye"
+									fontSize={16}
+									className="hover:text-primary"
+								></Icon>
+							</Link>
 						</td>
 					</tr>
 				))}
