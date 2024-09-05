@@ -28,7 +28,7 @@ export class MessageService {
 		private readonly cron: CronSchedulingProvider,
 		private readonly fakeMessagingProvider: FakeMessagingProvider
 	) {
-		this.cron.register(SEND_MESSAGE_EVENT, this.send);
+		this.cron.register(SEND_MESSAGE_EVENT, this.send.bind(this));
 		this.setupPending();
 	}
 
@@ -143,7 +143,7 @@ export class MessageService {
 		}
 	}
 
-	async send(messageId: string): Promise<void> {
+	async send({ messageId }: { messageId: string }): Promise<void> {
 		const message = await this.findById(messageId);
 		const link = `${this.frontend.url}/messages/${message.id}`;
 		const text = MESSAGE_TEXT(link);
