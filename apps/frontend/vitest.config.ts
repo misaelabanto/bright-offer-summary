@@ -8,5 +8,8 @@ export default defineConfig({
 		setupFiles: ['./vitest.setup.ts'],
 		globals: true,
 		environment: 'jsdom',
+		coverage: {
+			exclude: ['**/*.config.{js,mjs}', '**/*.test.{js,jsx,ts,tsx}'],
+		},
 	},
 });
