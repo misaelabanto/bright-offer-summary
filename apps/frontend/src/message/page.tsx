@@ -13,7 +13,9 @@ export const MessagesPage: FC = () => {
 			{!messages && <p>Loading...</p>}
 			{messages && <MessagesTable messages={messages} />}
 			<Link to="/admin/messages/schedule">
-				<Button type="button">Schedule new message</Button>
+				<Button type="button">
+					<span className="text-base-100">Schedule new message</span>
+				</Button>
 			</Link>
 		</div>
 	);
