@@ -26,6 +26,15 @@ export const AboutPage: FC = () => {
 							misaelabanto
 						</a>
 					</li>
+					<li>
+						<Icon icon="mdi:linkedin" className="text-blue-600"></Icon>
+						<a
+							className="hover:underline hover:decoration-blue-500"
+							href="https://linkedin.com/in/misaelabanto"
+						>
+							misaelabanto
+						</a>
+					</li>
 				</ul>
 			</div>
 		</main>
