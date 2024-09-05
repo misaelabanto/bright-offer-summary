@@ -11,10 +11,13 @@ export const HomePage: FC = () => {
 				>
 					Schedule Message
 				</Link>
-				<Link className="underline hover:decoration-blue-500" to="/messages">
+				<Link
+					className="underline hover:decoration-blue-500"
+					to="/admin/messages"
+				>
 					Messages List
 				</Link>
-				<Link className="underline hover:decoration-blue-500" to="/about">
+				<Link className="underline hover:decoration-blue-500" to="/admin/about">
 					About
 				</Link>
 			</div>

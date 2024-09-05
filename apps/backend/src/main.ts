@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
 import { AppModule } from '~/app.module';
+import { migrateDatabase } from '~/migrate';
 
 process.on('unhandledRejection', (reason: Error, promise: Promise<unknown>) => {
 	if (process.env.NODE_ENV === 'production') {
@@ -14,6 +15,9 @@ process.on('unhandledRejection', (reason: Error, promise: Promise<unknown>) => {
 
 async function bootstrap(): Promise<void> {
 	const logger = new Logger('NestApplication');
+	if (process.env.NODE_ENV === 'production') {
+		migrateDatabase();
+	}
 	const app = await NestFactory.create(AppModule, {
 		cors: true,
 	});

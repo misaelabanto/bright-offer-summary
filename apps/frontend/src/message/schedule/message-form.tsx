@@ -35,9 +35,7 @@ export const MessageForm: FC<MessageFormProps> = ({
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const data = Object.fromEntries(
-			new FormData(formRef.current || undefined).entries()
-		);
+		const data = Object.fromEntries(new FormData(formRef.current!).entries());
 		const dto = createMessageDtoSchema.parse({
 			offer: {
 				systemSize: Number(data.systemSize),
@@ -56,7 +54,13 @@ export const MessageForm: FC<MessageFormProps> = ({
 	};
 
 	return (
-		<form className="form-control" onSubmit={handleSubmit} ref={formRef}>
+		<form
+			className="form-control"
+			onSubmit={handleSubmit}
+			ref={formRef}
+			name="scheduleMessage"
+			aria-label="Schedule message"
+		>
 			<div className="grid md:grid-cols-3 sm:grid-cols-2">
 				<TextInput name="phoneNumber" label="Phone Number" />
 				<DateInput name="sendAtDate" label="Fecha de envío" />
