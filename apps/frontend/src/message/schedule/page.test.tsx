@@ -36,6 +36,35 @@ describe('MessageSchedulePage', () => {
 
 		// Simulate form submission
 		const form = screen.getByRole('form');
+
+		fireEvent.change(screen.getByLabelText(/Phone Number/i), {
+			target: { value: '1234567890' },
+		});
+		fireEvent.change(screen.getByLabelText(/Fecha de envío/i), {
+			target: { value: '2023-10-10' },
+		});
+		fireEvent.change(screen.getByLabelText(/Hora de envío/i), {
+			target: { value: '10:00' },
+		});
+		fireEvent.change(screen.getByLabelText(/System Size/i), {
+			target: { value: '5' },
+		});
+		fireEvent.change(screen.getByLabelText(/Panel Quantity/i), {
+			target: { value: '20' },
+		});
+		fireEvent.change(screen.getByLabelText(/Panel Type/i), {
+			target: { value: 'Type A' },
+		});
+		fireEvent.change(screen.getByLabelText(/Monthly Payment/i), {
+			target: { value: '100' },
+		});
+		fireEvent.change(screen.getByLabelText(/Initial Deposit/i), {
+			target: { value: '500' },
+		});
+		fireEvent.change(screen.getByLabelText(/Annual Escalator/i), {
+			target: { value: '2' },
+		});
+
 		fireEvent.submit(form);
 
 		// Check if createMessage is called

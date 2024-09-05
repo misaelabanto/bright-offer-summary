@@ -1,5 +1,5 @@
 import { useCreateMessage } from '@/message/hooks/use-create-message';
-import { MessageForm } from '@/message/message-form';
+import { MessageForm } from '@/message/schedule/message-form';
 import { ICreateMessageDto } from '@bright-offer-summary/shared';
 import { FC } from 'react';
 
