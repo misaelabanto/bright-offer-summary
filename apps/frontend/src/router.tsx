@@ -12,34 +12,39 @@ export const router = createBrowserRouter([
 		children: [],
 	},
 	{
-		path: '/messages',
+		path: 'messages/:id',
 		async lazy() {
-			const { MessageLayout } = await import('./message/layout');
-			return { Component: MessageLayout };
+			const { MessageIdPage } = await import('./message/id/page');
+			return { Component: MessageIdPage };
 		},
+	},
+	{
+		path: 'admin',
 		children: [
 			{
-				index: true,
+				path: 'messages',
 				async lazy() {
-					const { MessagesPage } = await import('./message/page');
-					return { Component: MessagesPage };
+					const { MessageLayout } = await import('./message/layout');
+					return { Component: MessageLayout };
 				},
-			},
-			{
-				path: 'schedule',
-				async lazy() {
-					const { MessageSchedulePage } = await import(
-						'./message/schedule/page'
-					);
-					return { Component: MessageSchedulePage };
-				},
-			},
-			{
-				path: ':id',
-				async lazy() {
-					const { MessageIdPage } = await import('./message/id/page');
-					return { Component: MessageIdPage };
-				},
+				children: [
+					{
+						index: true,
+						async lazy() {
+							const { MessagesPage } = await import('./message/page');
+							return { Component: MessagesPage };
+						},
+					},
+					{
+						path: 'schedule',
+						async lazy() {
+							const { MessageSchedulePage } = await import(
+								'./message/schedule/page'
+							);
+							return { Component: MessageSchedulePage };
+						},
+					},
+				],
 			},
 		],
 	},
