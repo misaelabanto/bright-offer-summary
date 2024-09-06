@@ -5,7 +5,7 @@ FROM base AS builder
 WORKDIR /app
 RUN npm install -g turbo
 COPY . .
-RUN turbo prune backend --docker
+RUN turbo prune frontend --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -30,7 +30,7 @@ RUN pnpm turbo build --filter=frontend
 FROM nginx:latest AS runner
 WORKDIR /app
 
-COPY --from=builder /app/apps/frontend/dist /usr/share/nginx/html
+COPY --from=installer /app/apps/frontend/dist /usr/share/nginx/html
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
