@@ -4,16 +4,34 @@ import { Link } from 'react-router-dom';
 
 export const HomePage: FC = () => {
 	return (
-		<>
-			<h1 className="text-4xl text-center">Bright Solar Offer Summary</h1>
+		<div className="flex flex-col justify-center">
+			<h1 className="text-4xl text-center my-10">Bright Solar Offer Summary</h1>
 			<div className="flex justify-center items-center">
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-40">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-40 gap-y-10 justify-center">
 					<Link
-						to="https://api.bright.misaelabanto.com/docs"
-						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl"
+						to="/admin"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl group"
 					>
 						<div className="card-body flex items-center">
-							<Icon icon="mdi:api" fontSize={48} className="text-primary" />
+							<Icon
+								icon="mdi:shield-account"
+								fontSize={48}
+								className="text-primary group-hover:text-secondary"
+							/>
+							<h2 className="card-title text-center">Admin</h2>
+							<p>Admin mode to play with the features</p>
+						</div>
+					</Link>
+					<Link
+						to="https://api.bright.misaelabanto.com/docs"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl group"
+					>
+						<div className="card-body flex items-center">
+							<Icon
+								icon="mdi:api"
+								fontSize={48}
+								className="text-primary group-hover:text-secondary"
+							/>
 							<h2 className="card-title text-center">View API Docs</h2>
 							<p>
 								Access the API documentation to understand the available
@@ -23,13 +41,13 @@ export const HomePage: FC = () => {
 					</Link>
 					<Link
 						to="https://github.com/misaelabanto/bright-offer-summary"
-						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl group"
 					>
 						<div className="card-body flex items-center">
 							<Icon
 								icon="mdi:code-tags"
 								fontSize={48}
-								className="text-primary"
+								className="text-primary group-hover:text-secondary"
 							/>
 							<h2 className="card-title text-center">
 								View Code & Documentation
@@ -42,13 +60,13 @@ export const HomePage: FC = () => {
 					</Link>
 					<Link
 						to="https://docs.google.com/document/d/1TK4vL8kfoHKIpQWjYMAsNujprAlxrqa5KNyX8zRJlBU/edit?usp=sharing"
-						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl  group"
 					>
 						<div className="card-body flex items-center">
 							<Icon
 								icon="mdi:alert-circle"
 								fontSize={48}
-								className="text-primary"
+								className="text-primary group-hover:text-secondary"
 							/>
 							<h2 className="card-title text-center">View Challenge</h2>
 							<p>Review the challenge specifications and constraints</p>
@@ -56,34 +74,20 @@ export const HomePage: FC = () => {
 					</Link>
 					<Link
 						to="/about"
-						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl group"
 					>
 						<div className="card-body flex items-center">
 							<Icon
 								icon="mdi:information"
 								fontSize={48}
-								className="text-primary"
+								className="text-primary group-hover:text-secondary"
 							/>
 							<h2 className="card-title text-center">About</h2>
 							<p>Learn more about the project and its author</p>
 						</div>
 					</Link>
-					<Link
-						to="/admin"
-						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
-					>
-						<div className="card-body flex items-center">
-							<Icon
-								icon="mdi:shield-account"
-								fontSize={48}
-								className="text-primary"
-							/>
-							<h2 className="card-title text-center">Admin</h2>
-							<p>Admin mode to play with the features</p>
-						</div>
-					</Link>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
