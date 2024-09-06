@@ -9,7 +9,7 @@ export default defineConfig({
 		globals: true,
 		environment: 'jsdom',
 		coverage: {
-			exclude: ['**/*.config.{js,mjs}', '**/*.test.{js,jsx,ts,tsx}'],
+			exclude: ['**/*.config.{js,mjs}', '**/*.test.{js,jsx,ts,tsx}', 'dist/**'],
 		},
 	},
 });
