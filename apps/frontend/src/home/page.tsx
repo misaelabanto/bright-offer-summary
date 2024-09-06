@@ -69,7 +69,7 @@ export const HomePage: FC = () => {
 						</div>
 					</Link>
 					<Link
-						to="/about"
+						to="/admin"
 						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
 					>
 						<div className="card-body flex items-center">
