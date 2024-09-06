@@ -18,7 +18,7 @@ export const MessageSchedulePage: FC = () => {
 			<MessageForm onSubmit={onFormSubmit} isLoading={isLoading} />
 			<Link to="/admin/messages">
 				<Button type={'submit'}>
-					<span>View all messages</span>
+					<span className='text-base-100'>View all messages</span>
 				</Button>
 			</Link>
 		</div>
