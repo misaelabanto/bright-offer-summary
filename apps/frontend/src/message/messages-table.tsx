@@ -10,7 +10,7 @@ export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 		failed: 'bg-red-500',
 	} as const;
 	return (
-		<table className="table table-zebra w-full">
+		<table className="table w-full">
 			<thead>
 				<tr>
 					<th className="p-2">Created at</th>
@@ -22,7 +22,7 @@ export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 			</thead>
 			<tbody>
 				{messages.map(message => (
-					<tr key={message.id}>
+					<tr className="hover" key={message.id}>
 						<td className="p-2">
 							{new Date(message.createdAt).toLocaleString()}
 						</td>
