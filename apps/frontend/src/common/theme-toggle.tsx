@@ -8,6 +8,7 @@ export const ThemeToggle: FC = () => {
 		<label className="flex cursor-pointer gap-2">
 			<Icon icon="mdi:brightness-7" fontSize={24} />
 			<input
+				checked={theme === 'night'}
 				type="checkbox"
 				value={theme}
 				className="toggle theme-controller"
