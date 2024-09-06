@@ -2,6 +2,7 @@ import { useMessages } from '@/message/hooks/use-messages';
 import { IMessage, IOffer } from '@bright-offer-summary/shared';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { Mock } from 'vitest';
 import { MessagesPage } from './page';
 
@@ -13,7 +14,11 @@ describe('MessagesPage', () => {
 		// Mock the return value of useMessages
 		(useMessages as Mock).mockReturnValue({ messages: null });
 
-		render(<MessagesPage />);
+		render(
+			<BrowserRouter>
+				<MessagesPage />
+			</BrowserRouter>
+		);
 
 		// Check if the loading text is displayed
 		expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
@@ -42,7 +47,11 @@ describe('MessagesPage', () => {
 		// Mock the return value of useMessages
 		(useMessages as Mock).mockReturnValue({ messages: mockMessages });
 
-		render(<MessagesPage />);
+		render(
+			<BrowserRouter>
+				<MessagesPage />
+			</BrowserRouter>
+		);
 
 		// Check if the MessagesTable is displayed
 		expect(screen.getByText(/Scheduled messages/i)).toBeInTheDocument();

@@ -1,6 +1,8 @@
 import { IMessage, IOffer } from '@bright-offer-summary/shared';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
 import { MessagesTable } from './messages-table';
 
 const mockMessages: IMessage[] = [
@@ -32,8 +34,11 @@ const mockMessages: IMessage[] = [
 
 describe('MessagesTable', () => {
 	it('renders table headers correctly', () => {
-		render(<MessagesTable messages={mockMessages} />);
-		expect(screen.getByText('ID')).toBeInTheDocument();
+		render(
+			<BrowserRouter>
+				<MessagesTable messages={mockMessages} />
+			</BrowserRouter>
+		);
 		expect(screen.getByText('Created at')).toBeInTheDocument();
 		expect(screen.getByText('Scheduled at')).toBeInTheDocument();
 		expect(screen.getByText('Phone Number')).toBeInTheDocument();
@@ -41,16 +46,23 @@ describe('MessagesTable', () => {
 	});
 
 	it('renders the correct number of rows', () => {
-		render(<MessagesTable messages={mockMessages} />);
+		render(
+			<BrowserRouter>
+				<MessagesTable messages={mockMessages} />
+			</BrowserRouter>
+		);
 		const rows = screen.getAllByRole('row');
 		// Including header row
 		expect(rows).toHaveLength(mockMessages.length + 1);
 	});
 
 	it('renders each cell with correct data', () => {
-		render(<MessagesTable messages={mockMessages} />);
+		render(
+			<BrowserRouter>
+				<MessagesTable messages={mockMessages} />
+			</BrowserRouter>
+		);
 		mockMessages.forEach(message => {
-			expect(screen.getByText(message.id)).toBeInTheDocument();
 			expect(
 				screen.getByText(new Date(message.createdAt).toLocaleString())
 			).toBeInTheDocument();
@@ -63,7 +75,11 @@ describe('MessagesTable', () => {
 	});
 
 	it('applies correct class based on message status', () => {
-		render(<MessagesTable messages={mockMessages} />);
+		render(
+			<BrowserRouter>
+				<MessagesTable messages={mockMessages} />
+			</BrowserRouter>
+		);
 		mockMessages.forEach(message => {
 			const statusElement = screen.getByText(message.status);
 			if (message.status === 'pending') {
@@ -73,6 +89,26 @@ describe('MessagesTable', () => {
 			} else if (message.status === 'failed') {
 				expect(statusElement).toHaveClass('bg-red-500');
 			}
+		});
+	});
+
+	it('renders a message when there are no messages', () => {
+		render(<MessagesTable messages={[]} />);
+		expect(screen.getByText('No messages available')).toBeInTheDocument();
+	});
+
+	it('renders a link to the message details', () => {
+		render(
+			<BrowserRouter>
+				<MessagesTable messages={mockMessages} />
+			</BrowserRouter>
+		);
+		mockMessages.forEach(message => {
+			const linkElement = screen.getByRole('button', { name: message.id });
+			expect(linkElement.parentElement).toHaveAttribute(
+				'href',
+				`/messages/${message.id}`
+			);
 		});
 	});
 });

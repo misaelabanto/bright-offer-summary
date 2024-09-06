@@ -21,31 +21,41 @@ export const MessagesTable: FC<{ messages: IMessage[] }> = ({ messages }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{messages.map(message => (
-					<tr className="hover" key={message.id}>
-						<td className="p-2">
-							{new Date(message.createdAt).toLocaleString()}
-						</td>
-						<td className="p-2">{new Date(message.sendAt).toLocaleString()}</td>
-						<td className="p-2">{message.phoneNumber}</td>
-						<td className="p-2">
-							<span
-								className={`${statusColors[message.status]} p-2 rounded-md text-white`}
-							>
-								{message.status}
-							</span>
-						</td>
-						<td className="cursor-pointer">
-							<Link to={'/messages/' + message.id}>
-								<Icon
-									icon="mdi:eye"
-									fontSize={16}
-									className="hover:text-primary"
-								></Icon>
-							</Link>
-						</td>
+				{messages.length ? (
+					messages.map(message => (
+						<tr className="hover" key={message.id}>
+							<td className="p-2">
+								{new Date(message.createdAt).toLocaleString()}
+							</td>
+							<td className="p-2">
+								{new Date(message.sendAt).toLocaleString()}
+							</td>
+							<td className="p-2">{message.phoneNumber}</td>
+							<td className="p-2">
+								<span
+									className={`${statusColors[message.status]} p-2 rounded-md text-white`}
+								>
+									{message.status}
+								</span>
+							</td>
+							<td className="cursor-pointer">
+								<Link to={'/messages/' + message.id}>
+									<button aria-label={message.id}>
+										<Icon
+											icon="mdi:eye"
+											fontSize={16}
+											className="hover:text-primary"
+										></Icon>
+									</button>
+								</Link>
+							</td>
+						</tr>
+					))
+				) : (
+					<tr>
+						<td colSpan={5}>No messages available</td>
 					</tr>
-				))}
+				)}
 			</tbody>
 		</table>
 	);
