@@ -1,19 +1,17 @@
 FROM node:20-slim AS base
 
 FROM base AS builder
-# Set working directory
+
 WORKDIR /app
 RUN npm install -g turbo
 COPY . .
 RUN turbo prune backend --docker
 
-# Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
 RUN npm install -g pnpm@9.9.0
 RUN npm install -g turbo
 WORKDIR /app
 
-# First install dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml

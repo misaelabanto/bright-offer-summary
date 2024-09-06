@@ -1,6 +1,6 @@
 # ☀️ Bright Solar Offer Summary Monorepo
 
-This repository contains the codebase for the Bright Solar Offer Summary project. It is organized as a monorepo using `pnpm` workspaces, containing both the backend and frontend applications, as well as shared packages.
+This repository contains the codebase for the Bright Solar Offer Summary project. It is organized as a monorepo using `pnpm` powered by [https://turbo.build/](turborepo), containing both the backend and frontend applications, as well as shared packages.
 
 ## 📚 Table of Contents
 - [☀️ Bright Solar Offer Summary Monorepo](#️-bright-solar-offer-summary-monorepo)
