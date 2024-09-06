@@ -18,4 +18,5 @@ export default {
 	daisyui: {
 		themes: ['cmyk', 'night'],
 	},
+	darkMode: ['class', '[data-theme="night"]'],
 };
