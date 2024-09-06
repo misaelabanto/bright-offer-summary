@@ -74,7 +74,7 @@ export const HomePage: FC = () => {
 					>
 						<div className="card-body flex items-center">
 							<Icon
-								icon="mdi:information"
+								icon="mdi:shield-account"
 								fontSize={48}
 								className="text-primary"
 							/>
