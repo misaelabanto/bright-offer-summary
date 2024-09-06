@@ -34,11 +34,14 @@ export const HomePage: FC = () => {
 							<h2 className="card-title text-center">
 								View Code & Documentation
 							</h2>
-							<p>Explore the source code and additional</p>
+							<p>
+								Explore the source code and additional documentation of the
+								solution
+							</p>
 						</div>
 					</Link>
 					<Link
-						to="https://docs.google.com/document/d/17foY1XnD3qIMd-fisRmBWHmdYDK1aL0Kr5-Tfy7YTmI/edit?usp=sharing"
+						to="https://docs.google.com/document/d/1TK4vL8kfoHKIpQWjYMAsNujprAlxrqa5KNyX8zRJlBU/edit?usp=sharing"
 						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
 					>
 						<div className="card-body flex items-center">
@@ -63,6 +66,20 @@ export const HomePage: FC = () => {
 							/>
 							<h2 className="card-title text-center">About</h2>
 							<p>Learn more about the project and its author</p>
+						</div>
+					</Link>
+					<Link
+						to="/about"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+					>
+						<div className="card-body flex items-center">
+							<Icon
+								icon="mdi:information"
+								fontSize={48}
+								className="text-primary"
+							/>
+							<h2 className="card-title text-center">Admin</h2>
+							<p>Admin mode to play with the features</p>
 						</div>
 					</Link>
 				</div>
