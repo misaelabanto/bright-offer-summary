@@ -7,7 +7,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./sqlite.db:/app/sqlite.db
+      - ./sqlite.db:/app/apps/backend/sqlite.db
     environment:
       - NODE_ENV=production
   frontend:
