@@ -7,7 +7,9 @@ import {
 	useState,
 } from 'react';
 
-export const ToastContext = createContext({});
+export const ToastContext = createContext((toast: ToastProps) =>
+	console.log(toast)
+);
 
 export const ToastProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [toast, setToast] = useState<ToastProps>();
@@ -22,7 +24,6 @@ export const ToastProvider: FC<PropsWithChildren> = ({ children }) => {
 		}
 	}, [toast]);
 
-	// Show toast function
 	const showToast = ({ message, level }: ToastProps) => {
 		setToast({ message, level });
 	};
