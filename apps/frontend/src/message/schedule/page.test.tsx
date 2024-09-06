@@ -1,6 +1,7 @@
 import { useCreateMessage } from '@/message/hooks/use-create-message';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { Mock } from 'vitest';
 import { MessageSchedulePage } from './page';
 
@@ -15,7 +16,11 @@ describe('MessageSchedulePage', () => {
 			isLoading: false,
 		});
 
-		render(<MessageSchedulePage />);
+		render(
+			<BrowserRouter>
+				<MessageSchedulePage />
+			</BrowserRouter>
+		);
 
 		// Check if the heading is displayed
 		expect(screen.getByText(/Schedule message/i)).toBeInTheDocument();
@@ -32,7 +37,11 @@ describe('MessageSchedulePage', () => {
 			isLoading: false,
 		});
 
-		render(<MessageSchedulePage />);
+		render(
+			<BrowserRouter>
+				<MessageSchedulePage />
+			</BrowserRouter>
+		);
 
 		// Simulate form submission
 		const form = screen.getByRole('form');
@@ -66,6 +75,8 @@ describe('MessageSchedulePage', () => {
 		});
 
 		fireEvent.submit(form);
+
+		await screen.findByRole('button', { name: /Schedule!/i });
 
 		// Check if createMessage is called
 		expect(mockCreateMessage).toHaveBeenCalled();
