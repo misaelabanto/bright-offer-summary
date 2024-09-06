@@ -13,7 +13,7 @@ export const MessageIdPage: FC = () => {
 	const { message, error, isLoading } = useMessage(id!);
 
 	return (
-		<div className="flex justify-center h-screen``` items-center">
+		<div className="flex justify-center h-screen items-center">
 			{error && <GenericError message={error.message} />}
 			{isLoading && <div>Loading...</div>}
 			{message && <MessageView message={message} />}
