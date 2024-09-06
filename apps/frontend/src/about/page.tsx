@@ -8,12 +8,13 @@ export const AboutPage: FC = () => {
 			<main className="flex justify-center items-center h-screen">
 				<div className="flex flex-col gap-10">
 					<h1 className="text-4xl">About</h1>
+					<p>Repository: <a className='hover:underline hover:decoration-blue-500' href="https://github.com/misaelabanto/bright-offer-summary">https://github.com/misaelabanto/bright-offer-summary</a></p>
 					<p>Created by Misael Abanto</p>
 					<ul>
 						<li className="flex items-center gap-2">
 							<Icon icon="mdi:gmail" className="text-red-400"></Icon>
 							<a
-								className="hover:underline hover:decoration-primary-500"
+								className="hover:underline hover:decoration-blue-500"
 								href="mailto:misaelabanto@gmail.com"
 							>
 								misaelabanto@gmail.com
@@ -22,7 +23,7 @@ export const AboutPage: FC = () => {
 						<li className="flex items-center gap-2">
 							<Icon icon="mdi:github"></Icon>
 							<a
-								className="hover:underline hover:decoration-primary-500"
+								className="hover:underline hover:decoration-blue-500"
 								href="https://github.com/misaelabanto"
 							>
 								misaelabanto
@@ -31,7 +32,7 @@ export const AboutPage: FC = () => {
 						<li className="flex items-center gap-2">
 							<Icon icon="mdi:linkedin" className="text-blue-600"></Icon>
 							<a
-								className="hover:underline hover:decoration-primary-500"
+								className="hover:underline hover:decoration-blue-500"
 								href="https://linkedin.com/in/misaelabanto"
 							>
 								misaelabanto
