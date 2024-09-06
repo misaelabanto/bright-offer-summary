@@ -9,7 +9,7 @@ export const HomePage: FC = () => {
 			<div className="flex justify-center items-center">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-40">
 					<Link
-						to="/api-docs"
+						to="https://api.bright.misaelabanto.com/docs"
 						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl"
 					>
 						<div className="card-body flex items-center">
@@ -22,7 +22,7 @@ export const HomePage: FC = () => {
 						</div>
 					</Link>
 					<Link
-						to="/code-docs"
+						to="https://github.com/misaelabanto/bright-offer-summary"
 						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
 					>
 						<div className="card-body flex items-center">
