@@ -1,29 +1,72 @@
-import { Layout } from '@/layout';
+import { Icon } from '@iconify/react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 export const HomePage: FC = () => {
 	return (
-		<Layout>
-			<main className="flex justify-center items-center h-screen">
-				<div className="flex flex-col gap-10 grid-col-span-1 text-3xl">
+		<>
+			<h1 className="text-4xl text-center">Bright Solar Offer Summary</h1>
+			<div className="flex justify-center items-center">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-40">
 					<Link
-						className="underline hover:decoration-blue-500"
-						to="/admin/messages/schedule"
+						to="/api-docs"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl"
 					>
-						Schedule Message
+						<div className="card-body flex items-center">
+							<Icon icon="mdi:api" fontSize={48} className="text-primary" />
+							<h2 className="card-title text-center">View API Docs</h2>
+							<p>
+								Access the API documentation to understand the available
+								endpoints and their usage.
+							</p>
+						</div>
 					</Link>
 					<Link
-						className="underline hover:decoration-blue-500"
-						to="/admin/messages"
+						to="/code-docs"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
 					>
-						Messages List
+						<div className="card-body flex items-center">
+							<Icon
+								icon="mdi:code-tags"
+								fontSize={48}
+								className="text-primary"
+							/>
+							<h2 className="card-title text-center">
+								View Code & Documentation
+							</h2>
+							<p>Explore the source code and additional</p>
+						</div>
 					</Link>
-					<Link className="underline hover:decoration-blue-500" to="/about">
-						About
+					<Link
+						to="https://docs.google.com/document/d/17foY1XnD3qIMd-fisRmBWHmdYDK1aL0Kr5-Tfy7YTmI/edit?usp=sharing"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+					>
+						<div className="card-body flex items-center">
+							<Icon
+								icon="mdi:alert-circle"
+								fontSize={48}
+								className="text-primary"
+							/>
+							<h2 className="card-title text-center">View Challenge</h2>
+							<p>Review the challenge specifications and constraints</p>
+						</div>
+					</Link>
+					<Link
+						to="/about"
+						className="card w-80 bg-base-100 shadow-lg hover:shadow-2xl "
+					>
+						<div className="card-body flex items-center">
+							<Icon
+								icon="mdi:information"
+								fontSize={48}
+								className="text-primary"
+							/>
+							<h2 className="card-title text-center">About</h2>
+							<p>Learn more about the project and its author</p>
+						</div>
 					</Link>
 				</div>
-			</main>
-		</Layout>
+			</div>
+		</>
 	);
 };
