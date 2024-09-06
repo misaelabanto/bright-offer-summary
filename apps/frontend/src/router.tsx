@@ -22,6 +22,13 @@ export const router = createBrowserRouter([
 		path: '/admin',
 		children: [
 			{
+				index: true,
+				async lazy() {
+					const { AdminPage } = await import('./admin/page');
+					return { Component: AdminPage };
+				},
+			},
+			{
 				path: 'messages',
 				async lazy() {
 					const { MessageLayout } = await import('./message/layout');
