@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC } from 'react';
 export interface TextInputProps
 	extends Pick<
 		React.InputHTMLAttributes<HTMLInputElement>,
-		'name' | 'value' | 'placeholder'
+		'name' | 'value' | 'placeholder' | 'required'
 	> {
 	label: string;
 	onChange?: (value: string) => void;
@@ -15,6 +15,7 @@ export const TextInput: FC<TextInputProps> = ({
 	value,
 	placeholder,
 	onChange,
+	required,
 }) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.currentTarget.value;
@@ -30,6 +31,7 @@ export const TextInput: FC<TextInputProps> = ({
 				placeholder={placeholder}
 				id={name}
 				name={name}
+				required={required || true}
 				type="text"
 				value={value}
 				onChange={handleChange}

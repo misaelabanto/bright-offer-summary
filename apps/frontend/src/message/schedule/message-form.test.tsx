@@ -15,10 +15,10 @@ test('handleSubmit calls onSubmit with correct data', async () => {
 	fireEvent.change(screen.getByLabelText(/Phone Number/i), {
 		target: { value: '1234567890' },
 	});
-	fireEvent.change(screen.getByLabelText(/Fecha de envío/i), {
+	fireEvent.change(screen.getByLabelText(/Send Date/i), {
 		target: { value: '2023-10-10' },
 	});
-	fireEvent.change(screen.getByLabelText(/Hora de envío/i), {
+	fireEvent.change(screen.getByLabelText(/Send Time/i), {
 		target: { value: '10:00' },
 	});
 	fireEvent.change(screen.getByLabelText(/System Size/i), {

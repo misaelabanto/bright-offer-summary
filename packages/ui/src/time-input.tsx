@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC } from 'react';
 export interface TimeInputProps
 	extends Pick<
 		React.InputHTMLAttributes<HTMLInputElement>,
-		'name' | 'value' | 'placeholder'
+		'name' | 'value' | 'placeholder' | 'required'
 	> {
 	label: string;
 	onChange?: (value: string) => void;
@@ -15,6 +15,7 @@ export const TimeInput: FC<TimeInputProps> = ({
 	value,
 	placeholder,
 	onChange,
+	required,
 }) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.currentTarget.value;
@@ -31,6 +32,7 @@ export const TimeInput: FC<TimeInputProps> = ({
 				id={name}
 				name={name}
 				type="time"
+				required={required || true}
 				value={value}
 				onChange={handleChange}
 				className="input input-bordered w-full max-w-xs"

@@ -22,6 +22,7 @@
     "@bright-offer-summary/shared": "workspace:*",
     "@bright-offer-summary/ui": "workspace:*",
     "@eslint/js": "^9.9.0",
+    "@iconify/react": "^5.0.2",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/react-hooks": "^8.0.1",

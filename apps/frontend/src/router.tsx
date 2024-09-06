@@ -19,8 +19,15 @@ export const router = createBrowserRouter([
 		},
 	},
 	{
-		path: 'admin',
+		path: '/admin',
 		children: [
+			{
+				index: true,
+				async lazy() {
+					const { AdminPage } = await import('./admin/page');
+					return { Component: AdminPage };
+				},
+			},
 			{
 				path: 'messages',
 				async lazy() {

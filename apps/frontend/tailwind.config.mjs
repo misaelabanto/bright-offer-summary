@@ -16,20 +16,6 @@ export default {
 	},
 	plugins: [daisyui],
 	daisyui: {
-		themes: [
-			{
-				solar: {
-					primary: '#5eead4',
-					secondary: '#facc15',
-					accent: '#fdba74',
-					neutral: '#d1d5db',
-					'base-100': '#e7e5e4',
-					info: '#93c5fd',
-					success: '#4ade80',
-					warning: '#f97316',
-					error: '#ec4899',
-				},
-			},
-		],
+		themes: ['cmyk', 'night'],
 	},
 };
