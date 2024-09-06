@@ -5,7 +5,12 @@ This repository contains the codebase for the Bright Solar Offer Summary project
 ## Table of Contents
 - [Bright Solar Offer Summary Monorepo](#bright-solar-offer-summary-monorepo)
   - [Table of Contents](#table-of-contents)
+  - [Try it](#try-it)
+  - [API Docs](#api-docs)
+  - [Running the Project Locally](#running-the-project-locally)
+    - [Requirements:](#requirements)
   - [Structure](#structure)
+  - [Diagram](#diagram)
   - [Apps](#apps)
     - [Backend](#backend)
       - [Running the Project](#running-the-project)
@@ -21,6 +26,30 @@ This repository contains the codebase for the Bright Solar Offer Summary project
   - [Scripts](#scripts)
   - [Configuration](#configuration)
   - [Testing](#testing)
+
+## Try it
+The solution shines bright like a diamond at [https://bright.misaelabanto.com](https://bright.misaelabanto.com)!
+
+## API Docs
+The API documentation is available at [https://api.bright.misaelabanto.com/docs](https://api.bright.misaelabanto.com/docs).
+
+## Running the Project Locally
+
+Both backend and frontend applications are located in the `apps` directory. To start the project on your machine, follow these steps:
+
+1. Ensure you're in the root directory of the project.
+2. Run the following command:
+
+```bash
+docker compose up --build
+```
+
+This will start both the backend and frontend in development mode.
+
+### Requirements:
+- Docker
+- Docker Compose
+
 
 ## Structure
 
@@ -66,6 +95,9 @@ The repository is structured as follows:
 ├── pnpm-workspace.yaml
 └── turbo.json
 ```
+
+## Diagram
+![Bright Solar Offer Summary Monorepo Diagram](docs/bright-solution.svg)
 
 ## Apps
 
