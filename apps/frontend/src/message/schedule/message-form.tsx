@@ -63,7 +63,7 @@ export const MessageForm: FC<MessageFormProps> = ({
 			message: 'Message scheduled successfully!',
 			level: 'success',
 		});
-		// form.reset();
+		formRef.current?.reset();
 	};
 
 	return (
